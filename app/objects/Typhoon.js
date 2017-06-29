@@ -3,7 +3,7 @@ import {
 } from 'three';
 
 import props, { TEXTURE_WIDTH, TEXTURE_HEIGHT, TWO_SOURCES, CIRCLE } from 'core/props';
-import { getRandomFloat, getXBetweenTwoNumbers } from 'core/utils';
+import { getRandomFloat, getXBetweenTwoNumbers, radians } from 'core/utils';
 import engine from 'core/engine';
 import assets from 'core/assetLoader';
 import gui from 'core/gui';
@@ -75,6 +75,7 @@ export default class Typhoon extends Object3D {
     });
 
     this.particles = new Particles(TEXTURE_WIDTH, TEXTURE_HEIGHT, particleMaterial);
+    this.particles.rotation.x = radians(-90);
     this.add(this.particles);
 
     this.initHelpers();
@@ -251,5 +252,9 @@ export default class Typhoon extends Object3D {
     attraction.add(props, 'ATT_FORCE', 0, 2).onChange(() => {
       this.velocityFBO.material.uniforms.attractionForce.value = props.ATT_FORCE;
     });
+
+    // Reset button
+    props.resetTyphoon = this.reset.bind(this);
+    gui.add(props, 'resetTyphoon');
   }
 }

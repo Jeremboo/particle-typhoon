@@ -16,8 +16,7 @@ class Gui extends GUI {
 
   initGui() {
     this.enabled = true;
-    // this = new dat.GUI();
-    this.close();
+    // this.close();
     this.toggleHide();
   }
 
