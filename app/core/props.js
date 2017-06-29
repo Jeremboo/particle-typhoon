@@ -34,7 +34,7 @@ const props = {
     postProcess: {
       enabled: false,
     },
-    webglHelper: false,
+    webglHelper: true,
     disableWebgl: false,
   },
 };

@@ -4,13 +4,13 @@ import {
   AmbientLight,
 } from 'three';
 
-import loadAssets from 'core/assetLoader';
+import { loadAssets } from 'core/assetLoader';
 import Typhoon from 'objects/Typhoon';
 
 
 // TODO show loader
 
-engine.init().then(loadAssets).then(() => {
+engine.init().then(() => loadAssets).then(() => {
   /** ****************
   * INIT OBJECT
   ******************/
@@ -36,6 +36,10 @@ engine.init().then(loadAssets).then(() => {
     }
   });
 
+  /** ****************
+  * START
+  ******************/
+  engine.start();
   // TODO hide loader
 }).catch((e) => {
   // TODO show error webgl not supported

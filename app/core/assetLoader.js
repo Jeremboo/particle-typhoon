@@ -3,11 +3,16 @@ import { applyImageToCanvas } from 'core/utils';
 
 import baseColor from 'assets/imgs/baseColor.png';
 
+const assets = {
+  baseColorImageData: [],
+};
 
-export const assets = {};
+export default assets;
 
 // loadAssets()
-export default new Promise((resolve, reject) => applyImageToCanvas(baseColor)
-.then((canvas) => {
-  assets.canvasBaseColor = canvas;
-}));
+export const loadAssets = new Promise((resolve, reject) => {
+  applyImageToCanvas(baseColor).then((canvas) => {
+    assets.baseColorImageData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+    resolve();
+  });
+});

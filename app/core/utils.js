@@ -11,7 +11,7 @@
 // http://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
 export const getRandomInt = (min, max) => Math.floor((Math.random() * ((max - min) + 1))) + min;
 export const getRandomFloat = (min, max) => ((Math.random() * (max - min)) + min);
-export const getXBetweenTwoNumbers = (min, max, x) => (min + (x * ((max - min) / 10)));
+export const getXBetweenTwoNumbers = (min, max, x) => 1 - ((max - x) / (max - min));
 export const sqr = a => a * a;
 // http://cwestblog.com/2012/11/12/javascript-degree-and-radian-conversion/
 export const radians = deg => (deg * Math.PI) / 180;

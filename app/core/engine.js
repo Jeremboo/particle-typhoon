@@ -57,9 +57,6 @@ class Engine {
           this.gpuSim.initHelper();
           loop.add('gpuSim', this.gpuSim.update);
 
-          // Start loop
-          loop.start();
-
           // Add on resize for webgl
           window.addEventListener('resize', this._resize);
           window.addEventListener('orientationchange', this._resize);
@@ -118,6 +115,10 @@ class Engine {
 
       this.webgl.currentCamera = this.webgl.camera;
     }
+  }
+
+  start() {
+    loop.start();
   }
 
   /**
