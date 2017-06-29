@@ -1,12 +1,12 @@
 
-import dat from 'dat-gui';
+import { GUI } from 'dat-gui';
 
 import props from 'core/props';
 
-class Gui {
+class Gui extends GUI {
   constructor() {
+    super();
     this.enabled = false;
-    this.gui = false;
     this.folders = [];
 
     this.addMesh = this.addMesh.bind(this);
@@ -16,13 +16,13 @@ class Gui {
 
   initGui() {
     this.enabled = true;
-    this.gui = new dat.GUI();
-    this.gui.close();
+    // this = new dat.GUI();
+    this.close();
     this.toggleHide();
   }
 
   toggleHide() {
-    dat.GUI.toggleHide();
+    GUI.toggleHide();
   }
 
   /**
@@ -30,12 +30,6 @@ class Gui {
    * ADD
    * *********
    */
-
-  // add global prop
-  add(name, { min = 0, max = 9999, onChange = f => f, folderName = false } = {}) {
-    const folder = (folderName && (this.folders[folderName] || this.gui.addFolder(folderName))) || this.gui;
-    folder.add(props, name, min, max).onChange(onChange);
-  }
 
   // add light to move her
   addLight(light, name = `Light-${light.uuid}`, params) {
@@ -55,12 +49,12 @@ class Gui {
    * *********
    */
   _addObject3D(object, name = `Object3D-${object.uuid}`, { position = true, rotation = true } = props) {
-    if (!this.gui) {
+    if (!this) {
       console.log('ERROR: the gui is not initialised');
       return false;
     }
 
-    const objectFolder = this.gui.addFolder(name);
+    const objectFolder = this.addFolder(name);
 
     if (position) {
       const posFolder = objectFolder.addFolder('Position');

@@ -6,6 +6,7 @@ import props, { TEXTURE_WIDTH, TEXTURE_HEIGHT, TWO_SOURCES, CIRCLE } from 'core/
 import { getRandomFloat, getXBetweenTwoNumbers } from 'core/utils';
 import engine from 'core/engine';
 import assets from 'core/assetLoader';
+import gui from 'core/gui';
 
 import shaderSimulationPosition from 'shaders/simulationPosition.f.glsl';
 import shaderSimulationVelocity from 'shaders/simulationVelocity.f.glsl';
@@ -21,7 +22,7 @@ export default class Typhoon extends Object3D {
 
     // INIT DATA TEXTURES
     this.dt = {};
-    this.initDataTexture();
+    this.initDataTextures();
 
     // INIT SIMULATIONS
     this.velocityFBO = engine.gpuSim.createSimulation(
@@ -76,10 +77,13 @@ export default class Typhoon extends Object3D {
     this.particles = new Particles(TEXTURE_WIDTH, TEXTURE_HEIGHT, particleMaterial);
     this.add(this.particles);
 
+    this.initHelpers();
+
 
     // BINDING
     this.update = this.update.bind(this);
-    this.initDataTexture = this.initDataTexture.bind(this);
+    this.initDataTextures = this.initDataTextures.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   /**
@@ -91,7 +95,7 @@ export default class Typhoon extends Object3D {
   /**
    * Init all data textures
    */
-  initDataTexture() {
+  initDataTextures() {
     this.dt = {
       position: engine.gpuSim.createDataTexture(),
       velocity: engine.gpuSim.createDataTexture(),
@@ -150,7 +154,6 @@ export default class Typhoon extends Object3D {
           this.updateDTColors(x, y, i);
         }
     }
-    console.log(this.dt);
   }
 
   /**
@@ -196,5 +199,57 @@ export default class Typhoon extends Object3D {
 
   update() {
 
+  }
+
+  /**
+   * ****************
+   * HELPERS
+   *****************
+   **/
+
+  reset() {
+    engine.gpuSim.updateSimulation(this.velocityFBO, this.velocityFBO.initialDataTexture);
+    engine.gpuSim.updateSimulation(this.positionFBO, this.positionFBO.initialDataTexture);
+  }
+
+  initHelpers() {
+    const global = gui.addFolder('Global');
+    global.add(props, 'INITIAL_POS', [CIRCLE, TWO_SOURCES]).onChange(() => {
+      this.initDataTextures();
+      this.positionFBO.initialDataTexture = this.dt.position;
+      this.positionFBO.material.uniforms.initialPositionTexture.value = this.positionFBO.initialDataTexture;
+      this.reset();
+    });
+    global.add(props, 'POINT_SIZE', 1, 100).onChange(() => {
+      this.particles.material.uniforms.pointSize.value = props.POINT_SIZE;
+    });
+    global.add(props, 'DEMISE_DISTANCE', 0, 3).onChange(() => {
+      this.positionFBO.material.uniforms.demiseDistance.value = props.DEMISE_DISTANCE;
+      this.velocityFBO.material.uniforms.demiseDistance.value = props.DEMISE_DISTANCE;
+    });
+
+    // rotation
+    const rotation = gui.addFolder('Rotation');
+    rotation.add(props, 'ROT_CURVE', 0, 1).onChange(() => {
+      this.positionFBO.material.uniforms.rotationCurve.value = props.ROT_CURVE;
+    });
+    rotation.add(props, 'ROT_DIST', 0, 1).onChange(() => {
+      this.positionFBO.material.uniforms.rotationDistance.value = props.ROT_DIST;
+    });
+    rotation.add(props, 'ROT_FORCE', 0, 0.1).onChange(() => {
+      this.positionFBO.material.uniforms.rotationForce.value = props.ROT_FORCE;
+    });
+
+    // attraction
+    const attraction = gui.addFolder('Attraction');
+    attraction.add(props, 'ATT_CURVE', 0, 1).onChange(() => {
+      this.velocityFBO.material.uniforms.attractionCurve.value = props.ATT_CURVE;
+    });
+    attraction.add(props, 'ATT_DIST', 0, 2).onChange(() => {
+      this.velocityFBO.material.uniforms.attractionDistance.value = props.ATT_DIST;
+    });
+    attraction.add(props, 'ATT_FORCE', 0, 2).onChange(() => {
+      this.velocityFBO.material.uniforms.attractionForce.value = props.ATT_FORCE;
+    });
   }
 }
