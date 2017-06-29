@@ -1,0 +1,98 @@
+/**
+*
+* app/style/mixins.styl
+* Mixins
+*
+**/
+
+// CENTER
+center() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+centerX() {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+centerY() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// CONTAINER
+container() {
+  width: 90%;
+  max-width: 1024px;
+  margin: auto;
+}
+
+// OVERLAY
+overlay() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-color: overlayColor;
+  transition: 0.2s;
+    &:hover {
+      opacity: 1;
+    }
+}
+
+// CIRCLE
+circle(d) {
+  width: d;
+  height: d;
+  border-radius: d;
+}
+
+// MEDIA QUERIES
+mobile() {
+  @media screen and (max-width: 480px) {
+    {block}
+  }
+}
+tablet() {
+  @media screen and (min-width: 1024px){
+    {block}
+  }
+}
+largeScreen() {
+  @media screen and (min-width: 1600px){
+    {block}
+  }
+}
+mediaqueries(maxWidth) {
+  @media screen and (max-width: maxWidth){
+    {block}
+  }
+}
+
+// FONT
+webfont(family, fileUrl, font-weight = false, font-style = false, formats = eot woff2 woff truetype svg)
+	@font-face
+		fonts = ()
+		font-family family
+		if eot in formats
+			push(fonts, 'url("' + fileUrl + '.eot")  format("embedded-opentype")')
+		if woff2 in formats
+			push(fonts, 'url("' + fileUrl + '.woff2") format("woff2")')
+		if woff in formats
+			push(fonts, 'url("' + fileUrl + '.woff") format("woff")')
+		if opentype in formats || otf in formats
+			push(fonts, 'url("' + fileUrl + '.otf") format("opentype")')
+		if truetype in formats || ttf in formats
+			push(fonts, 'url("' + fileUrl + '.ttf") format("truetype")')
+		if svg in formats
+			push(fonts, 'url("' + fileUrl + '.svg#' + family + '") format("svg")')
+		src unquote(join(", ", fonts))
+		if font-weight
+			font-weight font-weight
+		if font-style
+			font-style font-style

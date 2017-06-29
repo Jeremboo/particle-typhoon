@@ -1,0 +1,39 @@
+/**
+*
+* app/style/fonts.styl
+* Base, reset...
+*
+**/
+
+@import './variables'
+@import './mixins'
+
+// RESET
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #app, #layout {
+  width: 100%;
+  height: 100%;
+  color: fontColor;
+  font-family: fontFamily;
+}
+
+button, input {
+  background-color: transparent;
+  border: none;
+  font: inherit;
+  line-height: normal;
+  outline: none;
+}
+
+a { text-decoration: none }
+
+ul { list-style-type: none }
+
+// CSS MASTER
+._content {
+  container();
+}

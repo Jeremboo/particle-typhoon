@@ -1,0 +1,9 @@
+# OS or Editor folders
+.DS_Store
+
+# NPM packages folder.
+node_modules/
+npm-debug.log
+
+# Webpack
+public/
