@@ -4,25 +4,28 @@ import {
   AmbientLight,
 } from 'three';
 
-import Exemple from 'objects/Exemple';
+import loadAssets from 'core/assetLoader';
+import Typhoon from 'objects/Typhoon';
 
 
 // TODO show loader
-engine.init().then(() => {
 
-  // TODO load Assets
+engine.init().then(loadAssets).then(() => {
+  /** ****************
+  * INIT OBJECT
+  ******************/
 
-  // TODO Init objects
- // LIGHT
+  // LIGHT
   const ambiantLight = new AmbientLight(0xffffff, 0.5);
   engine.webgl.add(ambiantLight);
 
   // OBJECTS
-  const exemple = new Exemple();
-  engine.webgl.add(exemple);
+  const typhoon = new Typhoon();
+  engine.webgl.add(typhoon);
 
-
-  // TODO Helpers
+  /** ****************
+  * INIT HELPERS
+  ******************/
   engine.onToggleHelper((enabled) => {
     if (enabled) {
       // const lightHelper = new PointLightHelper(this.lights[i], 10);
@@ -36,5 +39,5 @@ engine.init().then(() => {
   // TODO hide loader
 }).catch((e) => {
   // TODO show error webgl not supported
-  console.log(e);
+  throw (e);
 });

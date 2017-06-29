@@ -7,6 +7,7 @@ class Gui {
   constructor() {
     this.enabled = false;
     this.gui = false;
+    this.folders = [];
 
     this.addMesh = this.addMesh.bind(this);
     this.initGui = this.initGui.bind(this);
@@ -18,20 +19,42 @@ class Gui {
     this.gui = new dat.GUI();
     this.gui.close();
     this.toggleHide();
-
-    this.rotationSpeed = this.gui.add(props, 'rotationSpeed', 0, 1);
-
-    // PostProcess
-    // this.postProcessFolder = this.gui.addFolder('PostProcess');
-    // this.postProcessFolder.add(props.postProcess, 'enabled');
-
   }
 
   toggleHide() {
     dat.GUI.toggleHide();
   }
 
-  addObject3D(object, name = `Object3D-${object.uuid}`, { position = true, rotation = true } = props) {
+  /**
+   * *********
+   * ADD
+   * *********
+   */
+
+  // add global prop
+  add(name, { min = 0, max = 9999, onChange = f => f, folderName = false } = {}) {
+    const folder = (folderName && (this.folders[folderName] || this.gui.addFolder(folderName))) || this.gui;
+    folder.add(props, name, min, max).onChange(onChange);
+  }
+
+  // add light to move her
+  addLight(light, name = `Light-${light.uuid}`, params) {
+    props.rotation = props.rotation || false;
+    const lightFolder = this._addObject3D(light, name, params);
+    if (lightFolder) lightFolder.add(light, 'power', 0, 25.132741229);
+  }
+
+  // add mesh to move him
+  addMesh(mesh, name = `Mesh-${mesh.uuid}`, params) {
+    const meshFolder = this._addObject3D(mesh, name, params);
+  }
+
+  /**
+   * *********
+   * PRIVATE
+   * *********
+   */
+  _addObject3D(object, name = `Object3D-${object.uuid}`, { position = true, rotation = true } = props) {
     if (!this.gui) {
       console.log('ERROR: the gui is not initialised');
       return false;
@@ -56,16 +79,6 @@ class Gui {
     // TODO scale folder
 
     return objectFolder;
-  }
-
-  addLight(light, name = `Light-${light.uuid}`, params) {
-    props.rotation = props.rotation || false;
-    const lightFolder = this.addObject3D(light, name, params);
-    if (lightFolder) lightFolder.add(light, 'power', 0, 25.132741229);
-  }
-
-  addMesh(mesh, name = `Mesh-${mesh.uuid}`, params) {
-    const meshFolder = this.addObject3D(mesh, name, params);
   }
 }
 const gui = new Gui();

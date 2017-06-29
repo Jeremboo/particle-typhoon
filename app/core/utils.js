@@ -66,3 +66,44 @@ export const worldToLocalDirection = (object, worldDirectionVector, localDirecti
   localDirectionVector.copy(worldDirectionVector).applyQuaternion(object.getWorldQuaternion().inverse());
   return localDirectionVector;
 };
+
+
+
+// CANVAS
+export const canvasBuilder = (width = window.innerWidth, height = window.innerHeight) => {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d');
+  return {
+    canvas,
+    context,
+    getImageData: () => context.getImageData(0, 0, width, height).data,
+  };
+};
+export const applyImageToCanvas = (url, w, h) => new Promise((resolve, reject) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.responseType = 'blob';
+  xhr.onload = (e) => {
+    if (e.target.status === 200) {
+      const blob = e.target.response;
+      const image = new Image();
+      image.crossOrigin = 'Anonymous';
+      image.onload = () => {
+        const width = w || image.width;
+        const height = h || image.height;
+        const canvasB = canvasBuilder(width, height);
+        const { canvas, context } = canvasB;
+        context.drawImage(image, 0, 0, width, height);
+        window.URL.revokeObjectURL(blob);
+        resolve(canvas);
+      };
+      image.onerror = () => {
+        reject('Err : Canvas cannot be loaded');
+      };
+      image.src = window.URL.createObjectURL(blob);
+    }
+  };
+  xhr.send();
+});

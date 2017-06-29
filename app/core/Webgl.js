@@ -71,7 +71,7 @@ export default class Webgl {
   }
 
   update() {
-    if (props.postProcess.enabled) {
+    if (props.debug.postProcess.enabled) {
       this._composer.reset();
       this._composer.renderer.clear();
       this._composer.render(this.scene, this.camera);
@@ -94,7 +94,7 @@ export default class Webgl {
 
     this._renderer.setSize(w, h);
 
-    if (props.postProcess.enabled) {
+    if (props.debug.postProcess.enabled) {
      this._composer.setSize(w, h);
     }
   }

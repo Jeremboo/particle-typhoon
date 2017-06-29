@@ -6,13 +6,15 @@ import {
 import OrbitControls from 'vendors/OrbitControls';
 
 import Webgl from 'core/Webgl';
+import GPUSimulation from 'core/GPUSimulation';
 import gui from 'core/gui';
 import loop from 'core/loop';
-import props from 'core/props';
+import props, { TEXTURE_WIDTH, TEXTURE_HEIGHT } from 'core/props';
 
 class Engine {
   constructor() {
     this.webgl = false;
+    this.gpuSim = false;
     this.helperEnabled = false;
     this.onResize = false; // Callback of onResize listener
 
@@ -50,6 +52,12 @@ class Engine {
           this.webgl.dom.style.zIndex = -1;
           document.body.appendChild(this.webgl.dom);
 
+          // GPU Simulation
+          this.gpuSim = new GPUSimulation(TEXTURE_WIDTH, TEXTURE_HEIGHT, this.webgl._renderer);
+          this.gpuSim.initHelper();
+          loop.add('gpuSim', this.gpuSim.update);
+
+          // Start loop
           loop.start();
 
           // Add on resize for webgl
