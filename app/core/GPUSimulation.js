@@ -258,7 +258,7 @@ export default class GPUSimulation {
     // compute
     this.renderTexture(
       input,
-      simulation.fbos[this.currentFboTextureIdx]
+      simulation.fbos[this.currentFboTextureIdx],
     );
     // save the render to the output
     simulation.output = simulation.fbos[this.currentFboTextureIdx];
@@ -272,7 +272,7 @@ export default class GPUSimulation {
    * @param {WebGLRenderTarget} output
    */
   renderTexture(input, output) {
-    this.mesh.material.uniforms.texture.value = input;
+    this.mesh.material.uniforms.texture.value = input.texture;
     this.renderer.render(this.scene, this.orthoCamera, output, true);
   }
 
