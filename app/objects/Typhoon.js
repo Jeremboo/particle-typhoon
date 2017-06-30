@@ -162,18 +162,19 @@ export default class Typhoon extends Object3D {
    */
   updateDTColors(xPos, yPos, i) {
     const maxPosition = props.MAX_DISTANCE * 0.5;
+
     const xPercent = getXBetweenTwoNumbers(-maxPosition, maxPosition, xPos);
     const yPercent = getXBetweenTwoNumbers(-maxPosition, maxPosition, yPos);
 
-    const xPosition = Math.floor(xPercent * TEXTURE_WIDTH) * 4;
-    const yPosition = Math.floor(yPercent * TEXTURE_HEIGHT) * 4;
+    const xPixelPos = Math.floor(xPercent * assets.baseColor.width);
+    const yPixelPos = Math.floor(yPercent * assets.baseColor.height);
 
-    const position = (TEXTURE_HEIGHT * yPosition) + xPosition;
+    const dataPos = (assets.baseColor.height * yPixelPos * 4) + (xPixelPos * 4);
 
     this.setRGBAToDataTexture('colors', i, {
-      x: assets.baseColorImageData[position] / 255,
-      y: assets.baseColorImageData[position + 1] / 255,
-      z: assets.baseColorImageData[position + 2] / 255,
+      x: assets.baseColor.imageData[dataPos] / 255,
+      y: assets.baseColor.imageData[dataPos + 1] / 255,
+      z: assets.baseColor.imageData[dataPos + 2] / 255,
     });
   }
 
