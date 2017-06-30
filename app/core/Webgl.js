@@ -16,7 +16,7 @@ export default class Webgl {
     this.scene = new Scene();
 
     this.camera = new PerspectiveCamera(50, w / h, 1, 1000);
-    this.camera.position.z = 100;
+    this.camera.position.set(0, 12, 50);
     this.currentCamera = this.camera;
 
     this._renderer = new WebGLRenderer({

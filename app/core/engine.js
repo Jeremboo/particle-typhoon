@@ -86,7 +86,8 @@ class Engine {
       if (!this.axisHelper) this.axisHelper = new AxisHelper(300);
       if (!this.debugCamera) {
         this.debugCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-        this.debugCamera.position.z = 150;
+        this.debugCamera.position.z = 20;
+        this.debugCamera.position.y = 20;
         this.controls = new OrbitControls(this.debugCamera, this.webgl.dom);
       }
 
