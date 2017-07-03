@@ -15,13 +15,20 @@ class Gui extends GUI {
   }
 
   initGui() {
-    this.enabled = true;
-    // this.close();
     this.toggleHide();
   }
 
   toggleHide() {
+    this.enabled = !this.enabled;
     GUI.toggleHide();
+
+    // fbo gui
+    this.fboGui = document.getElementById('fboh-fbos-list');
+    if (this.enabled) {
+      this.fboGui.style.display = 'none';
+    } else {
+      this.fboGui.style.display = 'block';
+    }
   }
 
   /**

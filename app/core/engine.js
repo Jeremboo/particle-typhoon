@@ -93,8 +93,6 @@ class Engine {
 
       if (!this.cameraHelper) this.camerahelper = new CameraHelper(this.webgl.camera);
 
-      gui.toggleHide();
-
       document.querySelector('.dg.ac').style.zIndex = 10;
       this.webgl._renderer.setClearColor(0xaaaaaa, 1);
 
@@ -105,7 +103,6 @@ class Engine {
 
       this.webgl.currentCamera = this.debugCamera;
     } else {
-      gui.toggleHide();
 
       this.webgl._renderer.setClearColor(0xfefefe, 1);
 
@@ -116,6 +113,8 @@ class Engine {
 
       this.webgl.currentCamera = this.webgl.camera;
     }
+
+    gui.toggleHide();
   }
 
   start() {
