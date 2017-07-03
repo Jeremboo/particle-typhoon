@@ -84,7 +84,7 @@ export default class Typhoon extends Object3D {
     // BINDING
     this.update = this.update.bind(this);
     this.initDataTextures = this.initDataTextures.bind(this);
-    this.reset = this.reset.bind(this);
+    this.reload = this.reload.bind(this);
   }
 
   /**
@@ -199,9 +199,7 @@ export default class Typhoon extends Object3D {
    *****************
    **/
 
-  update() {
-
-  }
+  update() {}
 
   /**
    * ****************
@@ -209,19 +207,24 @@ export default class Typhoon extends Object3D {
    *****************
    **/
 
-  reset() {
-    engine.gpuSim.updateSimulation(this.velocityFBO, this.velocityFBO.initialDataTexture);
+  reload() {
+    this.initDataTextures();
+
+    // Update posible new position
+    this.positionFBO.initialDataTexture = this.dt.position;
+    this.positionFBO.material.uniforms.initialPositionTexture.value = this.positionFBO.initialDataTexture;
     engine.gpuSim.updateSimulation(this.positionFBO, this.positionFBO.initialDataTexture);
+
+    // Update colors
+    this.particles.material.uniforms.colors.value = this.dt.colors;
+
+    // Init velocity (always the same init)
+    engine.gpuSim.updateSimulation(this.velocityFBO, this.velocityFBO.initialDataTexture);
   }
 
   initHelpers() {
     const global = gui.addFolder('Global');
-    global.add(props, 'INITIAL_POS', [CIRCLE, TWO_SOURCES]).onChange(() => {
-      this.initDataTextures();
-      this.positionFBO.initialDataTexture = this.dt.position;
-      this.positionFBO.material.uniforms.initialPositionTexture.value = this.positionFBO.initialDataTexture;
-      this.reset();
-    });
+    global.add(props, 'INITIAL_POS', [CIRCLE, TWO_SOURCES]).onChange(this.reload.bind(this));
     global.add(props, 'POINT_SIZE', 1, 100).onChange(() => {
       this.particles.material.uniforms.pointSize.value = props.POINT_SIZE;
     });
@@ -255,7 +258,7 @@ export default class Typhoon extends Object3D {
     });
 
     // Reset button
-    props.resetTyphoon = this.reset.bind(this);
+    props.resetTyphoon = this.reload.bind(this);
     gui.add(props, 'resetTyphoon');
   }
 }
