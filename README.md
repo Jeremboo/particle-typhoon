@@ -3,6 +3,7 @@
 Typhoon of particles in webgl (using three.js).
 
 <p align="center">
+  <img alt="Storm with shadow" src="https://github.com/Jeremboo/particle-typhoon/blob/master/previews/20170704_stromPictureBased.gif?raw=true" width="200">
   <img alt="Storm of particles" src="https://github.com/Jeremboo/particle-typhoon/blob/master/previews/20170702_stromPictureBased.gif?raw=true" width="200">
 </p>
 

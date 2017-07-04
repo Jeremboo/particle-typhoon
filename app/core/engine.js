@@ -61,10 +61,6 @@ class Engine {
           window.addEventListener('resize', this._resize);
           window.addEventListener('orientationchange', this._resize);
 
-          if (!props.debug.disableWebgl && props.debug.webglHelper && process.env.NODE_ENV !== 'production') {
-            this.toggleHelper();
-          }
-
           resolve();
         } catch (e) { reject(e); }
       }
@@ -78,7 +74,6 @@ class Engine {
    */
   toggleHelper() {
     this.helperEnabled = !this.helperEnabled;
-    this.onToggleHelper(this.helperEnabled);
     if (this.helperEnabled) {
       // TODO helper into an other file
       if (!gui.enabled) gui.initGui();
@@ -86,8 +81,7 @@ class Engine {
       if (!this.axisHelper) this.axisHelper = new AxisHelper(300);
       if (!this.debugCamera) {
         this.debugCamera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-        this.debugCamera.position.z = 20;
-        this.debugCamera.position.y = 20;
+        this.debugCamera.position.set(-17, 3, -3);
         this.controls = new OrbitControls(this.debugCamera, this.webgl.dom);
       }
 
@@ -114,10 +108,15 @@ class Engine {
       this.webgl.currentCamera = this.webgl.camera;
     }
 
+    this.onToggleHelper(this.helperEnabled);
     gui.toggleHide();
   }
 
   start() {
+    if (!props.debug.disableWebgl && props.debug.webglHelper && process.env.NODE_ENV !== 'production') {
+      this.toggleHelper();
+    }
+
     loop.start();
   }
 

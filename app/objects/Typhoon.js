@@ -1,5 +1,7 @@
 import {
   Object3D, ShaderMaterial,
+  UniformsUtils, UniformsLib, FlatShading, DoubleSide,
+  Vector3,
 } from 'three';
 
 import props, { TEXTURE_WIDTH, TEXTURE_HEIGHT, TWO_SOURCES, CIRCLE } from 'core/props';
@@ -14,6 +16,10 @@ import shaderSimulationVelocity from 'shaders/simulationVelocity.f.glsl';
 import particleVert from 'shaders/particle.v.glsl';
 import particleFrag from 'shaders/particle.f.glsl';
 
+import vertDeth from 'shaders/depth.v.glsl';
+import fragDeth from 'shaders/depth.f.glsl';
+
+import lights from 'objects/Lights';
 import Particles from 'objects/Particles';
 
 export default class Typhoon extends Object3D {
@@ -63,19 +69,39 @@ export default class Typhoon extends Object3D {
 
 
     // CREATE PARTICLES
+    const uniformsLib = UniformsUtils.merge([
+      UniformsLib.common,
+      UniformsLib.lights,
+      UniformsLib.shadowmap,
+    ]);
+
     const particleMaterial = new ShaderMaterial({
-      uniforms: {
+      uniforms: Object.assign({
         colors: { type: 't', value: this.dt.colors },
         positions: { type: 't', value: this.positionFBO.output.texture },
         pointSize: { type: 'f', value: props.POINT_SIZE },
-      },
+        ligthIntensity: { type: 'v3', value: lights.ambiantLight.color.clone().multiplyScalar(lights.ambiantLight.intensity) },
+        lightPosition: { type: 'v3', value: lights.directionalLight.position },
+      }, uniformsLib),
       vertexShader: particleVert,
       fragmentShader: particleFrag,
       transparent: true,
+      lights: true,
+      shading: FlatShading,
+      side: DoubleSide,
     });
 
     this.particles = new Particles(TEXTURE_WIDTH, TEXTURE_HEIGHT, particleMaterial);
+    this.particles.castShadow = true;
+    this.particles.receiveShadow = true;
     this.particles.rotation.x = radians(-90);
+    // Override the default DepthMaterial
+    this.particles.customDepthMaterial = new ShaderMaterial({
+      vertexShader: vertDeth,
+      fragmentShader: fragDeth,
+      uniforms: particleMaterial.uniforms,
+      discard: true,
+    });
     this.add(this.particles);
 
     this.initHelpers();

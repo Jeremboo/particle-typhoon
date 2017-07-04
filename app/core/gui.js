@@ -41,7 +41,7 @@ class Gui extends GUI {
   addLight(light, name = `Light-${light.uuid}`, params) {
     props.rotation = props.rotation || false;
     const lightFolder = this._addObject3D(light, name, params);
-    if (lightFolder) lightFolder.add(light, 'power', 0, 25.132741229);
+    if (lightFolder && light.power) lightFolder.add(light, 'power', 0, 25.132741229);
   }
 
   // add mesh to move him
@@ -64,9 +64,9 @@ class Gui extends GUI {
 
     if (position) {
       const posFolder = objectFolder.addFolder('Position');
-      posFolder.add(object.position, 'x', -1000, 1000);
-      posFolder.add(object.position, 'y', -1000, 1000);
-      posFolder.add(object.position, 'z', -1000, 1000);
+      posFolder.add(object.position, 'x', -50, 50);
+      posFolder.add(object.position, 'y', -50, 50);
+      posFolder.add(object.position, 'z', -50, 50);
     }
 
     if (rotation) {
