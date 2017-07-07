@@ -1,7 +1,6 @@
 import {
   Object3D, ShaderMaterial,
   UniformsUtils, UniformsLib, FlatShading, DoubleSide,
-  Vector3,
 } from 'three';
 
 import props, { TEXTURE_WIDTH, TEXTURE_HEIGHT, TWO_SOURCES, CIRCLE } from 'core/props';

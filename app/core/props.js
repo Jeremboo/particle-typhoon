@@ -11,6 +11,8 @@ export const TEXTURE_WIDTH = TEXTURE_SIZE;
 
 // PROPS
 const props = {
+
+  // TYPHOON
   POINT_SIZE: 1,
   INITIAL_POS: CIRCLE,
 
@@ -30,12 +32,17 @@ const props = {
   ATT_DIST: 1.2,
   ATT_FORCE: 0.6,
 
+  // SCENE
+  FOG_NEAR: 0.15,
+  FOG_FAR: 100,
+
   debug: {
     postProcess: {
       enabled: false,
     },
     webglHelper: true,
     disableWebgl: false,
+    orbitControlsMainCamera: true,
   },
 };
 
