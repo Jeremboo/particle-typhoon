@@ -5,13 +5,20 @@ varying vec3 vColor;
 varying vec3 vNormal;
 varying vec3 vPos;
 
+#include <fog_pars_fragment>
+
 void main() {
-  vec4 addedLights = vec4(ligthIntensity, 1.0);
+  // LIGHT
+  vec3 addedLights = ligthIntensity;
   vec3 lightDirection = normalize(lightPosition - vPos);
   float diffuseLighting = max(dot(vNormal, lightDirection), 0.0);
-  addedLights.rgb += diffuseLighting * 0.5;
+  addedLights += diffuseLighting * 0.5;
 
-  gl_FragColor = vec4(vColor, 1.0) * addedLights;
+  // FOG
+  float depth = gl_FragCoord.z / gl_FragCoord.w;
+  float fogFactor = smoothstep( fogNear, fogFar * 1.4, depth );
+
+  gl_FragColor = vec4(mix( vColor * addedLights, fogColor, fogFactor ), 1.0);
 }
 // #define PARTICLE
 //

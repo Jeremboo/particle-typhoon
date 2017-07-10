@@ -72,6 +72,7 @@ export default class Typhoon extends Object3D {
       UniformsLib.common,
       UniformsLib.lights,
       UniformsLib.shadowmap,
+      UniformsLib.fog,
     ]);
 
     const particleMaterial = new ShaderMaterial({
@@ -86,6 +87,7 @@ export default class Typhoon extends Object3D {
       fragmentShader: particleFrag,
       transparent: true,
       lights: true,
+      fog: true,
       shading: FlatShading,
       side: DoubleSide,
     });

@@ -34,7 +34,7 @@ const props = {
 
   // SCENE
   FOG_NEAR: 0.15,
-  FOG_FAR: 60,
+  FOG_FAR: 50,
 
   // PLANE
   CURVE_AMPL: 0.07,
