@@ -34,7 +34,11 @@ const props = {
 
   // SCENE
   FOG_NEAR: 0.15,
-  FOG_FAR: 100,
+  FOG_FAR: 60,
+
+  // PLANE
+  CURVE_AMPL: 0.07,
+  TURBULENCE_AMPL: 0.25,
 
   debug: {
     postProcess: {
