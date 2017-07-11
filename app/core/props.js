@@ -44,7 +44,7 @@ const props = {
     postProcess: {
       enabled: false,
     },
-    webglHelper: true,
+    webglHelper: false,
     disableWebgl: false,
     orbitControlsMainCamera: true,
   },

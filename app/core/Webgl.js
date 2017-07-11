@@ -19,7 +19,7 @@ export default class Webgl {
     this.scene.fog = new Fog(0xffffff, props.FOG_NEAR, props.FOG_FAR);
 
     this.camera = new PerspectiveCamera(50, w / h, 1, 1000);
-    this.camera.position.set(0, 12, 50);
+    this.camera.position.set(-50, 40, 70);
     this.currentCamera = this.camera;
 
     this._renderer = new WebGLRenderer({

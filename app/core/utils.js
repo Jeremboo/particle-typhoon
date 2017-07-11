@@ -5,6 +5,8 @@
 *
 **/
 
+import loop from 'core/loop';
+
 /*******
 * MATH
 *******/
@@ -67,9 +69,9 @@ export const worldToLocalDirection = (object, worldDirectionVector, localDirecti
   return localDirectionVector;
 };
 
-
-
-// CANVAS
+/*******
+* CANVAS
+*******/
 export const canvasBuilder = (width = window.innerWidth, height = window.innerHeight) => {
   const canvas = document.createElement('canvas');
   canvas.width = width;
@@ -106,3 +108,27 @@ export const applyImageToCanvas = (url, w, h) => new Promise((resolve, reject) =
   };
   xhr.send();
 });
+
+/*******
+* EASE
+*******/
+// https://github.com/danro/easing-js/blob/master/easing.js
+function easeInOutQuad(pos) {
+   if ((pos/=0.5) < 1) return 0.5*Math.pow(pos,2);
+   return -0.5 * ((pos-=2)*pos - 2);
+ };
+
+export const ease = (duration, fct) => {
+  const id = `ease-${Math.floor(Math.random() * 100)}`;
+  const frameDuration = duration * 60;
+  let i = 0;
+  const l = () => {
+    const pos = i / frameDuration;
+    fct(easeInOutQuad(pos));
+
+    // LOOP
+    i++;
+    if (i === (frameDuration)) loop.remove(id, l);
+  };
+  loop.add(id, l);
+};
