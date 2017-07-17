@@ -49,7 +49,7 @@ class Engine {
           this.webgl.dom.style.position = 'fixed';
           this.webgl.dom.style.top = 0;
           this.webgl.dom.style.left = 0;
-          this.webgl.dom.style.zIndex = -1;
+          // this.webgl.dom.style.zIndex = -1;
           document.body.appendChild(this.webgl.dom);
 
           // GPU Simulation
@@ -76,7 +76,6 @@ class Engine {
     this.helperEnabled = !this.helperEnabled;
     if (this.helperEnabled) {
       // TODO helper into an other file
-      if (!gui.enabled) gui.initGui();
       if (!this.gridHelper) this.gridHelper = new GridHelper(200, 200);
       if (!this.axisHelper) this.axisHelper = new AxisHelper(300);
       if (!this.debugCamera) {

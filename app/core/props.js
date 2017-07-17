@@ -32,13 +32,25 @@ const props = {
   ATT_DIST: 1.2,
   ATT_FORCE: 0.6,
 
-  // SCENE
+  // FOG
   FOG_NEAR: 0.15,
-  FOG_FAR: 50,
+  BASE_FOG_FAR: 6,
+  FOG_FAR: 70, // 50
 
   // PLANE
-  CURVE_AMPL: 0.07,
-  TURBULENCE_AMPL: 0.25,
+  CURVE_AMPL: 0.08,
+  TURBULENCE_AMPL: 0.17,
+  MAX_AMPL: 20,
+
+  // CAMERA
+  EASE_DURATION: 15,
+  BASE_DIST: 46,
+  LOOK_AT: 4,
+  ROTATION_SPEED: 0.005,
+  TARGETED_POSITION: {
+    dist: 9,
+    y: 0.8,
+  },
 
   debug: {
     postProcess: {

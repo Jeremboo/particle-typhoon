@@ -31,6 +31,7 @@ var config = {
       // compress: true,
       contentBase: path.resolve(__dirname, '../app'),
       headers: { 'Access-Control-Allow-Origin': '*' },
+      disableHostCheck: true,
       historyApiFallback: true,
       host: '0.0.0.0',
       hot: true,

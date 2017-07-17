@@ -9,25 +9,29 @@ class Gui extends GUI {
     this.enabled = false;
     this.folders = [];
 
-    this.addMesh = this.addMesh.bind(this);
-    this.initGui = this.initGui.bind(this);
-    this.toggleHide = this.toggleHide.bind(this);
-  }
+    GUI.toggleHide();
 
-  initGui() {
-    this.toggleHide();
+    this.addMesh = this.addMesh.bind(this);
+    this.toggleHide = this.toggleHide.bind(this);
   }
 
   toggleHide() {
     this.enabled = !this.enabled;
     GUI.toggleHide();
 
+    const fboGui = document.getElementById('fboh-fbos-list');
+    const debugCameraCoord = document.getElementById('camera-coord');
+    // const gui = document.querySelector('.dg.ac');
+
     // fbo gui
-    this.fboGui = document.getElementById('fboh-fbos-list');
     if (this.enabled) {
-      this.fboGui.style.display = 'none';
+      fboGui.style.display = 'block';
+      debugCameraCoord.style.display = 'block';
+      // gui.style.display = 'block';
     } else {
-      this.fboGui.style.display = 'block';
+      fboGui.style.display = 'none';
+      debugCameraCoord.style.display = 'none';
+      // gui.style.display = 'none';
     }
   }
 

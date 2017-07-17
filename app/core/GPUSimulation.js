@@ -292,5 +292,7 @@ export default class GPUSimulation {
   initHelper(w = window.innerWidth, h = window.innerHeight) {
     this.helper = new FBOHelper(this.renderer);
     this.helper.setSize(w, h);
+    const fboGui = document.getElementById('fboh-fbos-list');
+    fboGui.style.display = 'none';
   }
 }

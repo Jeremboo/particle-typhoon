@@ -19,12 +19,12 @@ export default class Plane extends Object3D {
     this.generateHeight();
 
     // White plane
-    const planeMaterial = new MeshPhongMaterial();
+    const planeMaterial = new MeshPhongMaterial({ color: 0xd0d0d0 });
     const plane = new Mesh(this.planeGeometry, planeMaterial);
     plane.receiveShadow = true;
 
     // GridPlane
-    const planeMaterial2 = new MeshPhongMaterial({ color: 0x000000, wireframe: true });
+    const planeMaterial2 = new MeshPhongMaterial({ color: 0x00383c, wireframe: true });
     const plane2 = new Mesh(this.planeGeometry, planeMaterial2);
     plane2.position.z += 0.05;
 
@@ -36,10 +36,13 @@ export default class Plane extends Object3D {
 
     // HELPER
     const planeDir = gui.addFolder('Plane');
-    planeDir.add(props, 'CURVE_AMPL', 0, 1).onChange(() => {
+    planeDir.add(props, 'CURVE_AMPL', 0, 0.2).onChange(() => {
       this.generateHeight();
     });
     planeDir.add(props, 'TURBULENCE_AMPL', 0, 1).onChange(() => {
+      this.generateHeight();
+    });
+    planeDir.add(props, 'MAX_AMPL', 0, 30).onChange(() => {
       this.generateHeight();
     });
   }
@@ -53,7 +56,7 @@ export default class Plane extends Object3D {
         const x = i * verticesPerLine;
         const y = j;
         const ampl = ((sqr(j - (VERTICES_PER_LINE * 0.5))) + (sqr(i - (VERTICES_PER_LINE * 0.5))));
-        this.planeGeometry.vertices[x + y].z = (ampl * props.CURVE_AMPL) + (noise.simplex2(x / 100, y) * ampl * props.TURBULENCE_AMPL);
+        this.planeGeometry.vertices[x + y].z = (ampl * props.CURVE_AMPL) + (noise.simplex2(x / 100, y) * Math.min(ampl * props.TURBULENCE_AMPL, props.MAX_AMPL));
       }
     }
     this.planeGeometry.verticesNeedUpdate = true;

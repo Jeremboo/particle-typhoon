@@ -10,16 +10,17 @@ import OrbitControls from 'vendors/OrbitControls';
 
 import props from 'core/props';
 import loop from 'core/loop';
+import gui from 'core/gui';
 
 export default class Webgl {
   constructor(w, h) {
     this.width = w;
     this.height = h;
     this.scene = new Scene();
-    this.scene.fog = new Fog(0xffffff, props.FOG_NEAR, props.FOG_FAR);
+    this.scene.fog = new Fog(0xFEFEFE, props.FOG_NEAR, props.BASE_FOG_FAR);
 
     this.camera = new PerspectiveCamera(50, w / h, 1, 1000);
-    this.camera.position.set(-50, 40, 70);
+    this.camera.position.y = 19;
     this.currentCamera = this.camera;
 
     this._renderer = new WebGLRenderer({
@@ -46,6 +47,10 @@ export default class Webgl {
 
     loop.add('0000', this.update);
     this.resize(w, h);
+
+    gui.add(props, 'FOG_FAR', 0, 200).onChange(() => {
+      this.scene.fog.far = props.FOG_FAR;
+    });
   }
 
   initPostprocessing() {

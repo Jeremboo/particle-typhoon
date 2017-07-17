@@ -250,7 +250,8 @@ export default class Typhoon extends Object3D {
   }
 
   initHelpers() {
-    const global = gui.addFolder('Global');
+    const typhoon = gui.addFolder('Typhoon');
+    const global = typhoon.addFolder('Global');
     global.add(props, 'INITIAL_POS', [CIRCLE, TWO_SOURCES]).onChange(this.reload.bind(this));
     global.add(props, 'POINT_SIZE', 1, 100).onChange(() => {
       this.particles.material.uniforms.pointSize.value = props.POINT_SIZE;
@@ -261,7 +262,7 @@ export default class Typhoon extends Object3D {
     });
 
     // rotation
-    const rotation = gui.addFolder('Rotation');
+    const rotation = typhoon.addFolder('Rotation');
     rotation.add(props, 'ROT_CURVE', 0, 1).onChange(() => {
       this.positionFBO.material.uniforms.rotationCurve.value = props.ROT_CURVE;
     });
@@ -273,7 +274,7 @@ export default class Typhoon extends Object3D {
     });
 
     // attraction
-    const attraction = gui.addFolder('Attraction');
+    const attraction = typhoon.addFolder('Attraction');
     attraction.add(props, 'ATT_CURVE', 0, 1).onChange(() => {
       this.velocityFBO.material.uniforms.attractionCurve.value = props.ATT_CURVE;
     });
@@ -285,7 +286,7 @@ export default class Typhoon extends Object3D {
     });
 
     // Reset button
-    props.resetTyphoon = this.reload.bind(this);
-    gui.add(props, 'resetTyphoon');
+    props.reset = this.reload.bind(this);
+    typhoon.add(props, 'reset');
   }
 }

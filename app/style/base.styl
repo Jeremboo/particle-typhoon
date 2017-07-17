@@ -14,7 +14,7 @@
   padding: 0;
 }
 
-html, body, #app, #layout {
+html, body, #layout {
   width: 100%;
   height: 100%;
   color: fontColor;
@@ -36,4 +36,16 @@ ul { list-style-type: none }
 // CSS MASTER
 ._content {
   container();
+}
+
+#camera-coord {
+  position: fixed;
+  bottom: _margin;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+
+.dg.ac {
+  z-index: 99;
 }
