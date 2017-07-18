@@ -46,6 +46,7 @@ const props = {
   EASE_DURATION: 15,
   BASE_DIST: 46,
   LOOK_AT: 4,
+  LOOK_AT_MIN: 3.5,
   ROTATION_SPEED: 0.005,
   TARGETED_POSITION: {
     dist: 9,

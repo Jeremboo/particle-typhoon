@@ -1,5 +1,6 @@
 import { Scene, PerspectiveCamera, WebGLRenderer, PCFSoftShadowMap, Fog } from 'three';
 
+import { getNormalizedPosFromScreen } from 'core/utils';
 import OrbitControls from 'vendors/OrbitControls';
 
 // import OrbitControls from 'vendors/OrbitControls';

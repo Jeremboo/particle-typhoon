@@ -1,6 +1,7 @@
 import {
   AxisHelper, GridHelper,
   PerspectiveCamera, CameraHelper,
+  Vector3,
 } from 'three';
 
 import OrbitControls from 'vendors/OrbitControls';
@@ -9,6 +10,7 @@ import Webgl from 'core/Webgl';
 import GPUSimulation from 'core/GPUSimulation';
 import gui from 'core/gui';
 import loop from 'core/loop';
+import { ease, getNormalizedPosFromScreen } from 'core/utils';
 import props, { TEXTURE_WIDTH, TEXTURE_HEIGHT } from 'core/props';
 
 class Engine {
@@ -116,7 +118,54 @@ class Engine {
       this.toggleHelper();
     }
 
+    this.startCameraMotion();
+
     loop.start();
+  }
+
+  /**
+   * Animates the camera at the beginning
+   * Rotates the camera around the Y axis
+   * Moves the camera depending of the mouse movement
+   */
+  startCameraMotion() {
+    const cameraCoord = document.getElementById('camera-coord');
+
+    let t = 6;
+    let dist = props.BASE_DIST;
+    let cameraLookAtY = props.LOOK_AT;
+    let currentCameraLookAtY = props.LOOK_AT;
+
+    // begining animation
+    ease(props.EASE_DURATION, (easing) => {
+      dist -= (dist - props.TARGETED_POSITION.dist) * easing;
+      this.webgl.camera.position.y -= (this.webgl.camera.position.y - props.TARGETED_POSITION.y) * easing;
+      this.webgl.scene.fog.far -= (this.webgl.scene.fog.far - props.FOG_FAR) * easing;
+    });
+
+    // add mouse move control
+    document.addEventListener('mousemove', (e) => {
+      const normalizedVector = getNormalizedPosFromScreen(e.x, e.y);
+      cameraLookAtY = Math.max(props.LOOK_AT_MIN, props.LOOK_AT + (normalizedVector.y * 2));
+    });
+
+    // camera rotation auto
+    loop.add('camera', () => {
+      t += props.ROTATION_SPEED;
+      // Position
+      this.webgl.camera.position.x = Math.cos(t) * dist;
+      this.webgl.camera.position.z = Math.sin(t) * dist;
+
+      // Rotation
+      currentCameraLookAtY -= (currentCameraLookAtY - cameraLookAtY) * 0.1;
+      this.webgl.camera.lookAt(new Vector3(0, currentCameraLookAtY, 0));
+
+      // HELPER camera position
+      if (this.debugCamera) {
+        const { x, y, z } = this.debugCamera.position;
+        cameraCoord.innerHTML = `{ x: ${x}, y: ${y}, z: ${z} }`;
+      }
+    });
   }
 
   /**

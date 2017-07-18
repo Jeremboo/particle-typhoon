@@ -96,6 +96,8 @@ export default class Typhoon extends Object3D {
     this.particles.castShadow = true;
     this.particles.receiveShadow = true;
     this.particles.rotation.x = radians(-90);
+    // https://stackoverflow.com/questions/32855271/three-js-buffergeometry-disappears-after-moving-camera-to-close
+    this.particles.frustumCulled = false;
     // Override the default DepthMaterial
     this.particles.customDepthMaterial = new ShaderMaterial({
       vertexShader: vertDeth,
