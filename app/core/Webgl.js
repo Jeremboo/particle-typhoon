@@ -21,7 +21,7 @@ export default class Webgl {
     this.scene.fog = new Fog(0xFEFEFE, props.FOG_NEAR, props.BASE_FOG_FAR);
 
     this.camera = new PerspectiveCamera(50, w / h, 1, 1000);
-    this.camera.position.y = 19;
+    this.camera.position.y = 22;
     this.currentCamera = this.camera;
 
     this._renderer = new WebGLRenderer({
@@ -34,7 +34,7 @@ export default class Webgl {
 
     this.dom = this._renderer.domElement;
 
-    if (props.debug.orbitControlsMainCamera || process.env.NODE_ENV !== 'production') {
+    if (props.debug.orbitControlsMainCamera && process.env.NODE_ENV !== 'production') {
       this.controls = new OrbitControls(this.camera, this.dom);
     }
 

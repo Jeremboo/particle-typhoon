@@ -49,8 +49,8 @@ const props = {
   LOOK_AT_MIN: 3.5,
   ROTATION_SPEED: 0.005,
   TARGETED_POSITION: {
-    dist: 9,
-    y: 0.8,
+    dist: 15,
+    y: 2,
   },
 
   debug: {

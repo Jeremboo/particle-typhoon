@@ -36,7 +36,6 @@ import {
   WebGLRenderTarget, BufferGeometry, BufferAttribute, DataTexture,
   ClampToEdgeWrapping, ShaderMaterial,
 } from 'three';
-import FBOHelper from 'three.fbo-helper';
 
 /**
  * *********
@@ -290,9 +289,13 @@ export default class GPUSimulation {
    * @param {number} height for the size of the canvas
    */
   initHelper(w = window.innerWidth, h = window.innerHeight) {
-    this.helper = new FBOHelper(this.renderer);
-    this.helper.setSize(w, h);
-    const fboGui = document.getElementById('fboh-fbos-list');
-    fboGui.style.display = 'none';
+    // To ignore three.fbo-helper in production
+    if (process.env.NODE_ENV !== 'production') {
+      const FBOHelper = require('three.fbo-helper');
+      this.helper = new FBOHelper(this.renderer);
+      this.helper.setSize(w, h);
+      const fboGui = document.getElementById('fboh-fbos-list');
+      fboGui.style.display = 'none';
+    }
   }
 }

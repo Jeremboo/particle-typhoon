@@ -56,7 +56,9 @@ class Engine {
 
           // GPU Simulation
           this.gpuSim = new GPUSimulation(TEXTURE_WIDTH, TEXTURE_HEIGHT, this.webgl._renderer);
-          this.gpuSim.initHelper();
+          if (process.env.NODE_ENV === 'development') {
+            this.gpuSim.initHelper();
+          }
           loop.add('gpuSim', this.gpuSim.update);
 
           // Add on resize for webgl

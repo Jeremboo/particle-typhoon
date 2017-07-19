@@ -6,7 +6,7 @@ var poststylus = require('poststylus');
 
 var node_modules = path.resolve(__dirname, '../node_modules');
 
-var basename = '/';
+var basename = '';
 
 module.exports = {
   entry:{
@@ -29,14 +29,14 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: [
-          path.resolve(__dirname, '../app/'),
-          path.resolve(__dirname, '../node_modules/three.fbo-helper/build/THREE.FBOHelper.js'),
+          path.resolve(__dirname, '../app'),
+          // path.resolve(__dirname, '../node_modules/three.fbo-helper'),
         ],
         loader: 'babel-loader',
         query: {
           plugins: [
             ['module-resolver', {
-              root: [path.resolve(__dirname, '../app/')],
+              root: [path.resolve(__dirname, '../app')],
             }],
           ],
         },
@@ -64,7 +64,7 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json',
-        include: path.resolve(__dirname, '../app/assets/')
+        include: path.resolve(__dirname, '../app/assets')
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
