@@ -8,6 +8,7 @@ import Typhoon from 'objects/Typhoon';
 import Plane from 'objects/Plane';
 
 import 'style/base.styl';
+import '../previews/preview.png';
 
 loader.show();
 
@@ -43,7 +44,12 @@ engine.init().then(() => loadAssets).then(() => {
   engine.start();
   loader.hide();
 
+  // Restart the particles position to show the beginning
+  setTimeout(() => {
+    typhoon.reload();
+  }, 1100);
+
 }).catch((e) => {
-  // TODO show error webgl not supported
+  // TODO shows error if the webgl is not supported
   throw (e);
 });

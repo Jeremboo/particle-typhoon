@@ -1,6 +1,7 @@
 import {
   Object3D, ShaderMaterial,
   UniformsUtils, UniformsLib, FlatShading, DoubleSide,
+  Vector3,
 } from 'three';
 
 import props, { TEXTURE_WIDTH, TEXTURE_HEIGHT, TWO_SOURCES, CIRCLE } from 'core/props';
@@ -81,7 +82,12 @@ export default class Typhoon extends Object3D {
         positions: { type: 't', value: this.positionFBO.output.texture },
         pointSize: { type: 'f', value: props.POINT_SIZE },
         ligthIntensity: { type: 'v3', value: lights.ambiantLight.color.clone().multiplyScalar(lights.ambiantLight.intensity) },
-        lightPosition: { type: 'v3', value: lights.directionalLight.position },
+        // lightPosition: { type: 'v3', value: lights.directionalLight.position },
+        lightPosition: { type: 'v3', value: new Vector3(
+          lights.directionalLight.position.x,
+          -lights.directionalLight.position.y + 1,
+          lights.directionalLight.position.z,
+        ) },
       }, uniformsLib),
       vertexShader: particleVert,
       fragmentShader: particleFrag,

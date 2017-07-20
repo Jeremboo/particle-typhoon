@@ -27,7 +27,7 @@ export default class Webgl {
     this._renderer = new WebGLRenderer({
       antialias: true,
     });
-    this._renderer.setPixelRatio(window.devicePixelRatio || 1);
+    // this._renderer.setPixelRatio(window.devicePixelRatio || 1);
     this._renderer.setClearColor(0xFEFEFE, 1);
     this._renderer.shadowMap.enabled = true;
     this._renderer.shadowMap.type = PCFSoftShadowMap;

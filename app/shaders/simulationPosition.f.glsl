@@ -24,7 +24,7 @@ void main() {
   float dist = velocityTex.a;
 
   // if to nearest
-  if (dist < demiseDistance) {
+  if (dist < demiseDistance || oldPosition.z > 18.0) {
     // init att the default position
     pos = texture2D(initialPositionTexture, vUv).xyz;
   } else {

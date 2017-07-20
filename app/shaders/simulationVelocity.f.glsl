@@ -18,7 +18,7 @@ varying vec2 vUv;
 void main() {
   // TEXTURES
   // Get the current position
-  vec2 position = texture2D(positionTexture, vUv).xy;
+  vec3 position = texture2D(positionTexture, vUv).xyz;
   // Get the old velocity
   vec4 velocityTex = texture2D(texture, vUv);
   vec2 oldVel = velocityTex.xy;
@@ -29,13 +29,13 @@ void main() {
 
   // INIT needed values
   vec2 vel = vec2(0.0);
-  float dist = length(position); // distance(position, vec2(0.0));
+  float dist = length(position.xy); // distance(position, vec2(0.0));
   float force = 1.0;
 
-  // If not to nearest
-  if (dist > demiseDistance) {
+  // If it is not to nearest
+  if (dist > demiseDistance && position.z < 18.0) {
     // Normalized force direction
-    vec2 normalized = position / dist; // normalize(position);
+    vec2 normalized = position.xy / dist; // normalize(position);
 
     // Force amplitude
     // http://www.mathopenref.com/graphfunctions.html?fx=(exp(a%20*%20(1%20-%20x%20-%20b)))%20*%20c&xh=1&xl=0&yh=10&yl=-10&a=3.595744680851064&b=0.3&c=1.4&dh=10&dl=-4&d=5.6

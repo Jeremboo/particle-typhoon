@@ -82,7 +82,10 @@ var config = {
         {
           test: /\.(png|jpe?g|gif|svg)$/,
           use: 'file-loader?name=imgs/[name].[ext]',
-          include: path.resolve(__dirname, '../app/assets/imgs'),
+          include: [
+            path.resolve(__dirname, '../app/assets/imgs'),
+            path.resolve(__dirname, '../previews/'),
+          ],
         },
         {
           test: /\.(eot|svg|ttf|woff(2)?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -115,7 +118,7 @@ var config = {
     }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, '../app/assets/index.html'),
-        favicon: path.resolve(__dirname, '../app/assets/imgs/favicon.ico'),
+        favicon: path.resolve(__dirname, '../app/assets/imgs/favicon.png'),
       })
     ]
 };

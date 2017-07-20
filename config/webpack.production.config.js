@@ -69,7 +69,10 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)$/,
         use: 'file-loader?name=imgs/[hash].[ext]',
-        include: path.resolve(__dirname, '../app/assets/imgs'),
+        include: [
+          path.resolve(__dirname, '../app/assets/imgs'),
+          path.resolve(__dirname, '../previews/'),
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff(2)?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -111,7 +114,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../app/assets/index.html'),
-      favicon: path.resolve(__dirname, '../app/assets/imgs/favicon.ico'),
+      favicon: path.resolve(__dirname, '../app/assets/imgs/favicon.png'),
     })
   ]
 };

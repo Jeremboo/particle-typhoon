@@ -5,7 +5,7 @@ export const CIRCLE = 'circle';
 export const TWO_SOURCES = '2 sources';
 
 // SIZES
-export const TEXTURE_SIZE = 256; // 512;
+export const TEXTURE_SIZE = 128; // 512;
 export const TEXTURE_HEIGHT = TEXTURE_SIZE;
 export const TEXTURE_WIDTH = TEXTURE_SIZE;
 
@@ -25,7 +25,7 @@ const props = {
   VEL_BRAKE: 0.9, // 0.9,
 
   ROT_CURVE: 1, // force of rotation at the center
-  ROT_DIST: 0.18, // distance of force at the center
+  ROT_DIST: 0.2, // distance of force at the center
   ROT_FORCE: 0.08, // global rotation force
 
   ATT_CURVE: 0.4, // To reduce the exponential force
