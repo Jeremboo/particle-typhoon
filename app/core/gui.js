@@ -9,7 +9,7 @@ class Gui extends GUI {
     this.enabled = false;
     this.folders = [];
 
-    GUI.toggleHide();
+    // GUI.toggleHide();
 
     this.addMesh = this.addMesh.bind(this);
     this.toggleHide = this.toggleHide.bind(this);

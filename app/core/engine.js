@@ -123,6 +123,7 @@ class Engine {
     this.startCameraMotion();
 
     loop.start();
+    this.webgl.dom.style.opacity = 1;
   }
 
   /**

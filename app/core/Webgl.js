@@ -33,6 +33,7 @@ export default class Webgl {
     this._renderer.shadowMap.type = PCFSoftShadowMap;
 
     this.dom = this._renderer.domElement;
+    this.dom.style.opacity = 0;
 
     if (props.debug.orbitControlsMainCamera && process.env.NODE_ENV !== 'production') {
       this.controls = new OrbitControls(this.camera, this.dom);
