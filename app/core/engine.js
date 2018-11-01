@@ -51,6 +51,7 @@ class Engine {
           this.webgl.dom.style.position = 'fixed';
           this.webgl.dom.style.top = 0;
           this.webgl.dom.style.left = 0;
+          this.webgl.dom.style.opacity = 0;
           // this.webgl.dom.style.zIndex = -1;
           document.body.appendChild(this.webgl.dom);
 
@@ -123,6 +124,7 @@ class Engine {
     this.startCameraMotion();
 
     loop.start();
+    document.body.style.opacity = 1;
     this.webgl.dom.style.opacity = 1;
   }
 
