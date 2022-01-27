@@ -24,7 +24,7 @@
     "dat-gui": "^0.5.0",
     "glslify": "^7.0.0",
     "noisejs": "^2.1.0",
-    "three": "^0.86.0",
+    "three": "^0.137.0",
     "three.fbo-helper": "^1.1.0"
   },
   "devDependencies": {
