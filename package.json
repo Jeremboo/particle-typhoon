@@ -47,7 +47,7 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.2",
     "glslify-loader": "^1.0.2",
-    "html-webpack-plugin": "^2.28.0",
+    "html-webpack-plugin": "^5.5.0",
     "ignore-styles": "^5.0.1",
     "ip": "^1.1.4",
     "json-loader": "^0.5.4",
